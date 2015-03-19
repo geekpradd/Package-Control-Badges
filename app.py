@@ -77,7 +77,11 @@ def downloads(package,format='svg'):
     print (base_endpoint)
     img = write_shield("Package Control", installs, color, format)
     resp = make_response(img.read())
-    resp.headers['Content-Type'] = mimetypes.types_map[".{0}".format(format)]
+    ##If SVG file is requested
+    if format=="svg":
+        res.headers['Content-type'] = "image/svg+xml"
+    else:
+        resp.headers['Content-Type'] = mimetypes.types_map[".{0}".format(format)]
     return resp
 
 if __name__ == "__main__":
