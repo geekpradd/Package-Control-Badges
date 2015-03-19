@@ -92,7 +92,7 @@ def downloads(package,format='svg'):
     resp = make_response(img.read())
     ##If SVG file is requested
     if format=="svg":
-        res.headers['Content-type'] = "image/svg+xml"
+        resp.headers['Content-type'] = "image/svg+xml"
     else:
         resp.headers['Content-Type'] = mimetypes.types_map[".{0}".format(format)]
     return resp
