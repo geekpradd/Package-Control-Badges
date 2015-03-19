@@ -7,12 +7,25 @@ except ImportError:
     from io import BytesIO
     from urllib.parse import quote
 import mimetypes
+import logging, sys
 import simplejson as json
 import requests
 from flask import Flask, request, make_response, redirect
 
 
 app = Flask(__name__)
+app.debug = True 
+app.logger.setLevel(logging.DEBUG)
+del app.logger.handlers[:]
+
+handler = logging.StreamHandler(stream=sys.stdout)
+handler.setLevel(logging.DEBUG)
+handler.formatter = logging.Formatter(
+    fmt=u"%(asctime)s level=%(levelname)s %(message)s",
+    datefmt="%Y-%m-%dT%H:%M:%SZ",
+)
+app.logger.addHandler(handler)
+
 
 # subject, status, color, format
 SHIELD_URL = "http://img.shields.io/badge/%s-%s-%s.%s"
@@ -87,5 +100,5 @@ def downloads(package,format='svg'):
 if __name__ == "__main__":
     if '.svg' not in mimetypes.types_map:
         mimetypes.add_type("image/svg+xml", ".svg")
-    app.run(debug=True)
+    app.run()
 
