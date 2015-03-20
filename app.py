@@ -87,8 +87,8 @@ def downloads(package,format='svg'):
         base_endpoint = '{0}?style={1}'.format(SHIELD_URL, request.args.get('style'))
     else:
         base_endpoint = SHIELD_URL
-    print (base_endpoint)
-    img = write_shield("Package Control", installs, color, format)
+    
+    img = write_shield("Package Control", installs, color, format, endpoint=base_endpoint)
     resp = make_response(img.read())
     ##If SVG file is requested
     if format=="svg":
